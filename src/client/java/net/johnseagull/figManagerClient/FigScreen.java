@@ -412,6 +412,7 @@ public class FigScreen<T extends AbstractWidget & Renderable> extends Screen {
                 toggle.col1 = 0xFFA0A0A0; toggle.col2 = 0xFF505050; toggle.bdr1 = 0xFF151515; toggle.bdr2 = 0xFF000000;
                 coolListOfOptionWidgets.add((T) toggle);
                 this.addRenderableWidget(toggle);
+                fig.rendered = true;
             }
             amountOfWidgetsOnScreen++;
         }
@@ -550,6 +551,17 @@ public class FigScreen<T extends AbstractWidget & Renderable> extends Screen {
 
     protected void init() {
         tempStringList.clear();
+        for (Field field : fieldsInFigs) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(FigManager.FIGS);
+                if (value instanceof Fig f) {
+                    f.rendered = false;
+                }
+            } catch (Exception e) {
+                clientLogger.error("Resetting fig render states failed, may fail to render on next open.");
+            }
+        }
         if (widthRatioFloat < 1f) {
             widthOfTheWidget = (int) (widthRatioFloat * width);
         } else {
