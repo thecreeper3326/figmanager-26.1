@@ -178,6 +178,7 @@ public class FigManager {
                 Object o = field.get(FIGS);
                 if (o instanceof Fig f) {
                     f.id = field.getName();
+
                 }
 
             } catch (IllegalAccessException e) {
@@ -334,7 +335,9 @@ public class FigManager {
                         if (f.value > max || f.value < min) {
                             invalid += 1;
                             errors.add("Invalid value of "+f.value+" for "+field.getName()+". Must be within "+min+" and "+ max +".");
-                            setFieldValue(field, figs, new Fig.IntFig(f.name,f.description,min,min,max));
+                            int clamped = Math.clamp(f.value, min, max);
+                            setFieldValue(field, figs, new Fig.IntFig(f.name,f.description,clamped,min,max));
+
                         }
                     }
                 }
@@ -345,7 +348,8 @@ public class FigManager {
                         if (f.value > max || f.value < min) {
                             invalid += 1;
                             errors.add("Invalid value of "+f.value+" for "+field.getName()+". Must be within "+min+" and "+ max +".");
-                            setFieldValue(field, figs, new Fig.FloatFig(f.name,f.description,min,min,max));
+                            float clamped = Math.clamp(f.value, min, max);
+                            setFieldValue(field, figs, new Fig.FloatFig(f.name,f.description,clamped,min,max));
                         }
                     }
                 }
