@@ -19,7 +19,7 @@ import java.util.Map;
 public class Fig {
     //generic properties for other figs
     public String name = "";
-    public String widgetType = ""
+    public String widgetType = "";
     public String description = "";
     public Boolean rendered = false;
     public String id = "";
